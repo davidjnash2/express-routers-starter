@@ -1,10 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
-const bookList = [];
-const movieList = [];
+// const bookList = [];
+// const movieList = [];
+
+// line one of two for books
+const bookRouter = require('./routes/bookRouter');
+
+// line one of two for movies
+const movieRouter = require('./routes/movieRouter');
 
 // express static file serving - public is the folder name
 app.use( express.static('server/public') );
@@ -19,20 +26,26 @@ app.listen(PORT, () => {
 })
 
 // TODO - Move these routes to their own modules!
-app.get('/book', (req, res) => {
-    res.send(bookList);
-});
+//line two of two for books
+app.use('/book', bookRouter);
 
-app.post('/book', (req, res) => {
-    bookList.push(req.body);
-    res.sendStatus(200);
-});
+//line two of two for movies
+app.use('/movie', movieRouter);
 
-app.get('/movie', (req, res) => {
-  res.send(movieList);
-});
+// app.get('/book', (req, res) => {
+//     res.send(bookList);
+// });
 
-app.post('/movie', (req, res) => {
-  movieList.push(req.body);
-  res.sendStatus(200);
-});
+// app.post('/book', (req, res) => {
+//     bookList.push(req.body);
+//     res.sendStatus(200);
+// });
+
+// app.get('/movie', (req, res) => {
+//   res.send(movieList);
+// });
+
+// app.post('/movie', (req, res) => {
+//   movieList.push(req.body);
+//   res.sendStatus(200);
+// });
